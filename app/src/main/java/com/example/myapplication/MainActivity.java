@@ -1,9 +1,9 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
 
@@ -14,12 +14,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        binding = ActivityMainBinding.inflate(LayoutInflater.from(this));
-//        binding.text.setText(R.string.new_text);
-        binding.btn.setOnClickListener(view -> {
-            binding.text.setText(R.string.new_text);
-            binding.text.setTextColor(getColor(R.color.black));
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        String str1 = String.valueOf(binding.editText.getText());
+        //обработчик нажатия конпки
+        binding.btn.setOnClickListener(v -> {
+            //создаем интент для перехода на MainActivity3
+            Intent intent = new Intent(this, MainActivity3.class);
+            //добавляем данные, которые будут переданы в MainActivity3.
+            //данные передаеются парами ключ-значение
+            //PUTTEXT - ключ, Hello - значение
+            intent.putExtra("PUTTEXT", "Hello");
+            //добавляем флаг
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            //запускаем MainActivity3 активити
+            startActivity(intent);
         });
     }
 }
